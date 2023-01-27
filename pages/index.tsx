@@ -11,7 +11,10 @@ export default function ClientSide() {
       </Head>
 
       <main className={styles.main}>
-        <Countries />
+        <h1>ID:</h1>
+        <div>
+          <Countries />
+        </div>
       </main>
 
       <footer className={styles.footer}></footer>
