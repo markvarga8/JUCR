@@ -19,16 +19,14 @@ const NavMenu: FC = () => {
         <span className="sr-only">Open sidebar</span>
         <HiOutlineMenuAlt3 className="h-6 w-6" aria-hidden="true" />
       </button>
-      <div className="flex flex-1 justify- px-6">
-        <div className="flex items-center">
+      <div className="px-6">
+        <div className="flex items-center h-full">
           {/* Profile dropdown */}
-          <Menu as="div" className="relative ml-3">
-            <div>
-              <Menu.Button className="flex text-white hover:text-black bg-jucr-primary p-3 rounded-full items-center text-xs font-medium hover:bg-jucr-secondary">
-                <span className="sr-only">Open user menu</span>
-                <FaUser className="h-5 w-5" />
-              </Menu.Button>
-            </div>
+          <Menu as="div">
+            <Menu.Button className="items-center text-white hover:text-black bg-jucr-primary p-3 rounded-full text-xs font-medium hover:bg-jucr-secondary">
+              <span className="sr-only">Open user menu</span>
+              <FaUser className="h-5 w-5" />
+            </Menu.Button>
             <Transition
               as={Fragment}
               enter="transition ease-out duration-100"

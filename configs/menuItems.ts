@@ -1,6 +1,5 @@
 import {
   FaHome,
-  FaUsers,
   FaFolder,
   FaCalendar,
   FaInbox,
@@ -8,7 +7,7 @@ import {
 } from "react-icons/fa";
 
 const menuItems: Array<IMenuItem> = [
-  { name: "Dashboard", href: "/", icon: FaHome },
+  { name: "Home", href: "/", icon: FaHome },
   { name: "Projects", href: "/projects", icon: FaFolder },
   { name: "Calendar", href: "/calendar", icon: FaCalendar },
   { name: "Documents", href: "/documents", icon: FaInbox },
