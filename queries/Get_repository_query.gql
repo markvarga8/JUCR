@@ -1,0 +1,18 @@
+query vmi {
+  repository(owner: "markvarga8", name: "shopping-list") {
+    id
+    nameWithOwner
+    description
+    url
+    issues(last: 5) {
+      totalCount
+      nodes {
+        title
+        createdAt
+        author {
+          login
+        }
+      }
+    }
+  }
+}
