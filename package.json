@@ -9,15 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "classnames": "^2.3.2",
     "graphql-tag": "^2.12.6",
     "next": "13.1.5",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-icons": "^4.7.1",
+    "react-redux": "^8.0.5"
   },
   "devDependencies": {
     "@apollo/client": "^3.7.5",
     "@headlessui/react": "^1.7.7",
-    "@heroicons/react": "^2.0.14",
+    "@reduxjs/toolkit": "^1.9.1",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
