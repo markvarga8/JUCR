@@ -1,13 +1,22 @@
-import "../styles/globals.css";
+import "@/styles/globals.css";
 import { ApolloProvider } from "@apollo/client";
 import client from "@/lib/apollo-client";
+import type { AppProps } from "next/app";
 
-function MyApp({ Component, pageProps }: any) {
+type AppPropsWithLayout = AppProps<{}> & {
+  Component: NextPageWithLayout;
+};
+
+const MyApp = ({
+  Component,
+  pageProps: { ...pageProps },
+}: AppPropsWithLayout) => {
+  const getLayout = Component.getLayout ?? ((page: any) => page);
   return (
     <ApolloProvider client={client}>
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
     </ApolloProvider>
   );
-}
+};
 
 export default MyApp;
