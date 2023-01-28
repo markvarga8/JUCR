@@ -3,11 +3,15 @@ import menuItems from "@/configs/menuItems";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import logo from "@/public/images/car-svgrepo-com.svg";
 
 const DesktopMenu: FC = () => {
   const router = useRouter();
+
+  useEffect(() => {
+    console.log(router);
+  }, [router]);
 
   return (
     <div className="hidden overflow-y-auto md:fixed w-28 h-full bg-jucr-primary md:block opacity-95">
@@ -21,7 +25,7 @@ const DesktopMenu: FC = () => {
           {menuItems.map((menuItem, i) => (
             <MenuItem
               key={i}
-              active={router.pathname.includes(menuItem.href)}
+              active={router.pathname === menuItem.href}
               href={menuItem.href}
               icon={menuItem.icon}
             >

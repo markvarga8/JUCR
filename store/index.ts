@@ -1,9 +1,11 @@
 import layoutSlice from "@/store/layoutSlice";
+import searchBar from "@/store/searchBar";
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 
 const store = configureStore({
   reducer: {
     layout: layoutSlice,
+    searchBar: searchBar,
   },
 });
 
