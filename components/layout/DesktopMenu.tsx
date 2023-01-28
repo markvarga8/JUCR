@@ -9,10 +9,6 @@ import logo from "@/public/images/car-svgrepo-com.svg";
 const DesktopMenu: FC = () => {
   const router = useRouter();
 
-  useEffect(() => {
-    console.log(router);
-  }, [router]);
-
   return (
     <div className="hidden overflow-y-auto md:fixed w-28 h-full bg-jucr-primary md:block opacity-95">
       <div className="flex w-full h-full flex-col items-center">

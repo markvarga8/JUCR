@@ -1,25 +1,37 @@
-import { Fragment, useState, useMemo, ChangeEvent, useRef } from "react";
+import {
+  Fragment,
+  useState,
+  useMemo,
+  ChangeEvent,
+  useRef,
+  FC,
+  useEffect,
+} from "react";
 import debounce from "lodash/debounce";
 import omitBy from "lodash/omitBy";
 import isEmpty from "lodash/isEmpty";
 import { Combobox, Dialog, Transition } from "@headlessui/react";
 import cn from "classnames";
-import { FaCertificate, FaGlobeAmericas, FaSearch } from "react-icons/fa";
+import { FaCertificate } from "react-icons/fa";
 import { useRouter } from "next/router";
 import SearchInput from "./form/SearchInput";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { setSearchBarOpen } from "@/store/searchBar";
+import { useQuery } from "@apollo/client";
+import Get_repositories_query from "@/queries/Get_repositories_query.gql";
+import Get_users_query from "@/queries/Get_users_query.gql";
 
-const items = [{ id: 1, name: "Workflow Inc.", category: "Clients", url: "#" }];
-
-export default function Example() {
+const SearchBar: FC = () => {
   const router = useRouter();
   const searchBarOpen = useSelector(
     (state: RootState) => state.searchBar.searchBarOpen
   );
   const dispatch = useDispatch();
   const searchInput = useRef<HTMLInputElement>(null);
+
+  const [mergeList, setMergeList] = useState<[]>([]);
+
   const debouncedEventHandler = useMemo(
     () =>
       debounce((event: ChangeEvent<HTMLInputElement>) => {
@@ -41,32 +53,40 @@ export default function Example() {
     [router]
   );
 
-  /////////
-  const [query, setQuery] = useState("");
+  const {
+    loading: usersLoading,
+    error: usersError,
+    data: usersData,
+    refetch: usersRefetch,
+  } = useQuery(Get_users_query, {
+    variables: { name: router.query.q },
+  });
 
-  const [open, setOpen] = useState(true);
+  const {
+    loading: repoLoading,
+    error: repoError,
+    data: repoData,
+    refetch: repoRefetch,
+  } = useQuery(Get_repositories_query, {
+    variables: { name: router.query.q },
+  });
+  useEffect(() => {
+    if (router.query.q) {
+      usersRefetch();
+      repoRefetch();
+    }
+  }, [router.query]);
 
-  const filteredItems =
-    query === ""
-      ? []
-      : items.filter((item) => {
-          return item.name.toLowerCase().includes(query.toLowerCase());
-        });
-
-  const groups = filteredItems.reduce((groups, item) => {
-    return {
-      ...groups,
-      [item.category]: [...(groups[item.category] || []), item],
-    };
-  }, {});
+  useEffect(() => {
+    if (usersData && repoData) {
+      const merged = [...repoData.search.edges, ...usersData.search.edges];
+      setMergeList(merged);
+      console.log(mergeList);
+    }
+  }, [usersData, repoData]);
 
   return (
-    <Transition.Root
-      show={searchBarOpen}
-      as={Fragment}
-      afterLeave={() => setQuery("")}
-      appear
-    >
+    <Transition.Root show={searchBarOpen} as={Fragment} appear>
       <Dialog
         as="div"
         className="relative z-10"
@@ -95,7 +115,7 @@ export default function Example() {
             leaveTo="opacity-0 scale-95"
           >
             <Dialog.Panel className="mx-auto max-w-xl transform overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
-              <Combobox onChange={(item) => (window.location = item.url)}>
+              <Combobox>
                 <div className="relative">
                   <SearchInput
                     // @ts-ignore:next-line
@@ -105,54 +125,46 @@ export default function Example() {
                   />
                 </div>
 
-                {query === "" && (
-                  <div className="border-t border-gray-100 py-14 px-6 text-center text-sm sm:px-14">
-                    <FaGlobeAmericas
-                      className="mx-auto h-6 w-6 text-gray-400"
-                      aria-hidden="true"
-                    />
-                    <p className="mt-4 font-semibold text-gray-900">
-                      Search for clients and projects
-                    </p>
-                    <p className="mt-2 text-gray-500">
-                      Quickly access clients and projects by running a global
-                      search.
-                    </p>
-                  </div>
-                )}
+                {usersLoading || (repoLoading && <p>Loading...</p>)}
 
-                {filteredItems.length > 0 && (
+                {mergeList && !usersLoading && !repoLoading && (
                   <Combobox.Options
                     static
                     className="max-h-80 scroll-pt-11 scroll-pb-2 space-y-2 overflow-y-auto pb-2"
                   >
-                    {Object.entries(groups).map(([category, items]) => (
-                      <li key={category}>
-                        <h2 className="bg-gray-100 py-2.5 px-4 text-xs font-semibold text-gray-900">
-                          {category}
-                        </h2>
-                        <ul className="mt-2 text-sm text-gray-800">
-                          {items.map((item) => (
-                            <Combobox.Option
-                              key={item.id}
-                              value={item}
-                              className={({ active }) =>
-                                cn(
-                                  "cursor-default select-none px-4 py-2",
-                                  active && "bg-indigo-600 text-white"
-                                )
-                              }
-                            >
-                              {item.name}
-                            </Combobox.Option>
-                          ))}
+                    <li>
+                      {mergeList.map((item: any, i: number) => (
+                        <ul className="mt-2 text-gray-800">
+                          <Combobox.Option
+                            key={i}
+                            value={item}
+                            className={({ active }) =>
+                              cn(
+                                "cursor-default select-none px-4 py-2",
+                                active && "bg-indigo-600 text-white"
+                              )
+                            }
+                          >
+                            <p className=" text-xl">
+                              {item.node.name
+                                ? item.node.name
+                                : "Name not available"}
+                            </p>
+                            <p className=" text-xs">
+                              {item.node.bio
+                                ? item.node.bio
+                                : item.node.description
+                                ? item.node.description
+                                : "No description"}
+                            </p>
+                          </Combobox.Option>
                         </ul>
-                      </li>
-                    ))}
+                      ))}
+                    </li>
                   </Combobox.Options>
                 )}
 
-                {query !== "" && filteredItems.length === 0 && (
+                {!mergeList.length && !usersLoading && !repoLoading && (
                   <div className="border-t border-gray-100 py-14 px-6 text-center text-sm sm:px-14">
                     <FaCertificate
                       className="mx-auto h-6 w-6 text-gray-400"
@@ -174,4 +186,6 @@ export default function Example() {
       </Dialog>
     </Transition.Root>
   );
-}
+};
+
+export default SearchBar;

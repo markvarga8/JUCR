@@ -1,0 +1,12 @@
+query GetUsers($name: String!) {
+  search(query: $name, type: USER, first: 10) {
+    edges {
+      node {
+        ... on User {
+          name
+          bio
+        }
+      }
+    }
+  }
+}

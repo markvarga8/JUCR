@@ -42,7 +42,7 @@ const SearchInput: FC<Props> = (props) => {
         defaultValue={router.query[key] || ""}
         type="search"
         id={`${key}${id}-search`}
-        className="block w-full h-10 rounded-md border-gray-300 pl-10 focus:border-tmrw-primary focus:ring-tmrw-primary sm:text-sm"
+        className="block w-full h-10 rounded-md border-gray-300 pl-10 sm:text-sm focus:outline-none"
         placeholder="Search..."
       />
     </div>
