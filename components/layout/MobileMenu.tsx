@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { FC, Fragment } from "react";
 import { HiX } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
-import logo from "@/public/images/car-svgrepo-com.svg";
+import logo from "@/public/images/car.svg";
 import Image from "next/image";
 
 const MobileMenu: FC = () => {

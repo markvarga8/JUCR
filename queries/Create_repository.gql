@@ -1,0 +1,10 @@
+mutation create($name: String!) {
+  createRepository(input: { visibility: PRIVATE, name: $name }) {
+    repository {
+      name
+      nameWithOwner
+      description
+      url
+    }
+  }
+}

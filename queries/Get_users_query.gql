@@ -3,8 +3,10 @@ query GetUsers($name: String!) {
     edges {
       node {
         ... on User {
+          id
           name
           bio
+          url
         }
       }
     }

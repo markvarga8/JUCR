@@ -10,7 +10,7 @@ interface OwnProps {
 type Props = OwnProps;
 
 const SearchInput: FC<Props> = (props) => {
-  const key = props.prefix ? `${props.prefix}-q` : "q";
+  const key = props.prefix ? props.prefix : "q";
   const id = useId();
 
   const router = useRouter();

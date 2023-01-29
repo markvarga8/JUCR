@@ -21,6 +21,9 @@ import { setSearchBarOpen } from "@/store/searchBar";
 import { useQuery } from "@apollo/client";
 import Get_repositories_query from "@/queries/Get_repositories_query.gql";
 import Get_users_query from "@/queries/Get_users_query.gql";
+import Link from "next/link";
+import Image from "next/image";
+import spinner from "@/public/images/spinner.svg";
 
 const SearchBar: FC = () => {
   const router = useRouter();
@@ -70,20 +73,19 @@ const SearchBar: FC = () => {
   } = useQuery(Get_repositories_query, {
     variables: { name: router.query.q },
   });
+
   useEffect(() => {
     if (router.query.q) {
       usersRefetch();
       repoRefetch();
     }
-  }, [router.query]);
 
-  useEffect(() => {
     if (usersData && repoData) {
       const merged = [...repoData.search.edges, ...usersData.search.edges];
+      // @ts-ignore:next-line
       setMergeList(merged);
-      console.log(mergeList);
     }
-  }, [usersData, repoData]);
+  }, [router.query, usersData, repoData]);
 
   return (
     <Transition.Root show={searchBarOpen} as={Fragment} appear>
@@ -125,7 +127,18 @@ const SearchBar: FC = () => {
                   />
                 </div>
 
-                {usersLoading || (repoLoading && <p>Loading...</p>)}
+                {usersLoading ||
+                  (repoLoading && (
+                    <div className="w-full flex justify-center">
+                      <Image
+                        src={spinner}
+                        alt="spinner"
+                        className="animate-spin"
+                        width="50"
+                        height="50"
+                      />
+                    </div>
+                  ))}
 
                 {mergeList && !usersLoading && !repoLoading && (
                   <Combobox.Options
@@ -135,29 +148,34 @@ const SearchBar: FC = () => {
                     <li>
                       {mergeList.map((item: any, i: number) => (
                         <ul className="mt-2 text-gray-800">
-                          <Combobox.Option
-                            key={i}
-                            value={item}
-                            className={({ active }) =>
-                              cn(
-                                "cursor-default select-none px-4 py-2",
-                                active && "bg-indigo-600 text-white"
-                              )
-                            }
+                          <Link
+                            href={item.node.url ? item.node.url : "#"}
+                            target="_blank"
                           >
-                            <p className=" text-xl">
-                              {item.node.name
-                                ? item.node.name
-                                : "Name not available"}
-                            </p>
-                            <p className=" text-xs">
-                              {item.node.bio
-                                ? item.node.bio
-                                : item.node.description
-                                ? item.node.description
-                                : "No description"}
-                            </p>
-                          </Combobox.Option>
+                            <Combobox.Option
+                              key={i}
+                              value={item}
+                              className={({ active }) =>
+                                cn(
+                                  "cursor-pointer select-none px-4 py-2",
+                                  active && "bg-indigo-600 text-white"
+                                )
+                              }
+                            >
+                              <p className=" text-xl">
+                                {item.node.name
+                                  ? item.node.name
+                                  : "Name not available"}
+                              </p>
+                              <p className=" text-xs">
+                                {item.node.bio
+                                  ? item.node.bio
+                                  : item.node.description
+                                  ? item.node.description
+                                  : "No description"}
+                              </p>
+                            </Combobox.Option>
+                          </Link>
                         </ul>
                       ))}
                     </li>
