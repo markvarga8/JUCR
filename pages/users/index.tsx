@@ -38,20 +38,10 @@ const Page: NextPageWithLayout = () => {
     [router]
   );
 
-  const {
-    loading: usersLoading,
-    error: usersError,
-    data: usersData,
-    refetch: usersRefetch,
-  } = useQuery(Get_users_query, {
+  const { loading: usersLoading, data: usersData } = useQuery(Get_users_query, {
     variables: { name: router.query.user },
   });
 
-  useEffect(() => {
-    if (router.query.user) {
-      usersRefetch();
-    }
-  }, [router.query]);
   return (
     <>
       <Head>
@@ -147,7 +137,9 @@ const Page: NextPageWithLayout = () => {
                       </Link>
                     </td>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 overflow-scroll">
-                      {user.node.description ? user.node.description : "-"}
+                      {user.node.description
+                        ? user.node.description
+                        : "Not available"}
                     </td>
                   </tr>
                 ))}

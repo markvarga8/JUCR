@@ -1,0 +1,10 @@
+mutation UpdateRepository($repositoryId: ID!, $name: String!) {
+  updateRepository(input: { repositoryId: $repositoryId, name: $name }) {
+    repository {
+      id
+      name
+      nameWithOwner
+      url
+    }
+  }
+}

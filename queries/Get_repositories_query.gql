@@ -3,6 +3,7 @@ query GetRepositories($name: String!) {
     edges {
       node {
         ... on Repository {
+          id
           name
           nameWithOwner
           description

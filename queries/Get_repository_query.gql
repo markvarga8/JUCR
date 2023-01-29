@@ -1,0 +1,6 @@
+query GetRepository($name: String!) {
+  repository(name: $name, owner: "markvarga8") {
+    id
+    name
+  }
+}

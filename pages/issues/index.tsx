@@ -1,6 +1,6 @@
 import MainLayout from "@/components/layout";
 import { useQuery } from "@apollo/client";
-import Get_repositories_query from "@/queries/Get_repositories_query.gql";
+import Get_issues_query from "@/queries/Get_issues_query.gql";
 import { useRouter } from "next/router";
 import SearchInput from "@/components/form/SearchInput";
 import { useMemo, ChangeEvent, useRef } from "react";
@@ -25,7 +25,7 @@ const Page: NextPageWithLayout = () => {
             query: omitBy(
               {
                 ...router.query,
-                repo: event.target.value,
+                issue: event.target.value,
                 page: undefined,
               },
               isEmpty
@@ -38,47 +38,41 @@ const Page: NextPageWithLayout = () => {
     [router]
   );
 
-  const { loading: repoLoading, data: repoData } = useQuery(
-    Get_repositories_query,
+  const { loading: issuesLoading, data: issuesData } = useQuery(
+    Get_issues_query,
     {
-      variables: { name: router.query.repo },
+      variables: { name: router.query.issue },
     }
   );
 
   return (
     <>
       <Head>
-        <title>{`Repositories - ${process.env.NEXT_PUBLIC_APP_NAME}`}</title>
+        <title>{`Issues - ${process.env.NEXT_PUBLIC_APP_NAME}`}</title>
       </Head>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <div className="flex">
               <h1 className="text-xl font-semibold text-gray-900 mr-3">
-                Repositories
+                Issues
               </h1>
-              <Link
-                href={"/repositories/create"}
-                className="px-3 py-2 text-sm leading-4 inline-flex items-center gap-2 rounded-md border border-transparent shadow-md text-white bg-jucr-primary transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jucr-primary"
-              >
-                Create repository
-              </Link>
             </div>
 
             <div className="relative mt-3">
               <SearchInput
                 // @ts-ignore:next-line
                 onChange={debouncedEventHandler}
-                prefix="repo"
+                prefix="issue"
                 ref={searchInput}
-                defaultValue={router.query.repo}
+                defaultValue={router.query.issue}
               />
             </div>
           </div>
         </div>
         <div className="-mx-4 overflow-auto shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
           <table className="min-w-full divide-y divide-gray-300 ">
-            {repoData && !repoLoading && (
+            {issuesData && !issuesLoading && (
               <thead className="bg-gray-50">
                 <tr>
                   <th
@@ -104,7 +98,7 @@ const Page: NextPageWithLayout = () => {
                 </tr>
               </thead>
             )}
-            {repoLoading && (
+            {issuesLoading && (
               <div className="w-full flex justify-center">
                 <Image
                   src={spinner}
@@ -115,7 +109,7 @@ const Page: NextPageWithLayout = () => {
                 />
               </div>
             )}
-            {!repoData?.search?.edges.length && !repoLoading && (
+            {!issuesData?.search?.edges.length && !issuesLoading && (
               <div className="border-t border-gray-100 py-14 px-6 text-center text-sm sm:px-14">
                 <FaCertificate
                   className="mx-auto h-6 w-6 text-gray-400"
@@ -129,37 +123,27 @@ const Page: NextPageWithLayout = () => {
                 </p>
               </div>
             )}
-            {repoData && !repoLoading && (
+            {issuesData && !issuesLoading && (
               <tbody className="divide-y divide-gray-200 bg-white">
-                {repoData.search.edges.map((repo: any, i: number) => (
+                {issuesData.search.edges.map((issue: any, i: number) => (
                   <tr key={i}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                      {repo.node.nameWithOwner}
+                      {issue.node.title
+                        ? issue.node.title
+                        : "Name not available"}
                     </td>
                     <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                       <Link
-                        href={repo.node.url ? repo.node.url : "#"}
-                        className="mr-2 px-3 py-2 text-sm leading-4 inline-flex items-center gap-2 rounded-md border border-transparent shadow-md text-white bg-jucr-primary transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jucr-primary"
+                        href={issue.node.url ? issue.node.url : "#"}
+                        className="px-3 py-2 text-sm leading-4 inline-flex items-center gap-2 rounded-md border border-transparent shadow-md text-white bg-jucr-primary transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jucr-primary"
                         target="_blank"
                       >
                         open
                       </Link>
-                      {repo.node.nameWithOwner.includes("markvarga8") && (
-                        <Link
-                          href={
-                            repo.node.name
-                              ? `/repositories/${repo.node.name}/update`
-                              : "#"
-                          }
-                          className="px-3 py-2 text-sm leading-4 inline-flex items-center gap-2 rounded-md border border-transparent shadow-md text-white bg-jucr-primary transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jucr-primary"
-                        >
-                          Update
-                        </Link>
-                      )}
                     </td>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 overflow-scroll">
-                      {repo.node.description
-                        ? repo.node.description
+                      {issue.node.description
+                        ? issue.node.description
                         : "Not available"}
                     </td>
                   </tr>

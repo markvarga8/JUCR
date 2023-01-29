@@ -1,0 +1,13 @@
+query GetIssues($name: String!) {
+  search(query: $name, type: ISSUE, first: 100) {
+    edges {
+      node {
+        ... on Issue {
+          id
+          url
+          title
+        }
+      }
+    }
+  }
+}

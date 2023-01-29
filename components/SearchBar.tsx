@@ -56,36 +56,24 @@ const SearchBar: FC = () => {
     [router]
   );
 
-  const {
-    loading: usersLoading,
-    error: usersError,
-    data: usersData,
-    refetch: usersRefetch,
-  } = useQuery(Get_users_query, {
+  const { loading: usersLoading, data: usersData } = useQuery(Get_users_query, {
     variables: { name: router.query.q },
   });
 
-  const {
-    loading: repoLoading,
-    error: repoError,
-    data: repoData,
-    refetch: repoRefetch,
-  } = useQuery(Get_repositories_query, {
-    variables: { name: router.query.q },
-  });
+  const { loading: repoLoading, data: repoData } = useQuery(
+    Get_repositories_query,
+    {
+      variables: { name: router.query.q },
+    }
+  );
 
   useEffect(() => {
-    if (router.query.q) {
-      usersRefetch();
-      repoRefetch();
-    }
-
     if (usersData && repoData) {
       const merged = [...repoData.search.edges, ...usersData.search.edges];
       // @ts-ignore:next-line
       setMergeList(merged);
     }
-  }, [router.query, usersData, repoData]);
+  }, [usersData, repoData]);
 
   return (
     <Transition.Root show={searchBarOpen} as={Fragment} appear>

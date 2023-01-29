@@ -3,7 +3,7 @@ import menuItems from "@/configs/menuItems";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import logo from "@/public/images/car.svg";
 
 const DesktopMenu: FC = () => {
