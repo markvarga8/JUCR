@@ -2,6 +2,7 @@ import menuItems from "@/configs/menuItems";
 import cn from "classnames";
 import MainLayout from "@/components/layout";
 import Head from "next/head";
+import Link from "next/link";
 
 const Page: NextPageWithLayout = () => {
   return (
@@ -34,11 +35,11 @@ const Page: NextPageWithLayout = () => {
                 </div>
                 <div className="mt-8">
                   <h3 className="text-lg font-medium">
-                    <a href={menuItem.href} className="focus:outline-none">
+                    <Link href={menuItem.href} className="focus:outline-none">
                       {/* Extend touch target to entire panel */}
                       <span className="absolute inset-0" aria-hidden="true" />
                       {menuItem.name}
-                    </a>
+                    </Link>
                   </h3>
                 </div>
                 <span

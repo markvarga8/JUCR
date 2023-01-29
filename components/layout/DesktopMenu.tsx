@@ -3,8 +3,8 @@ import menuItems from "@/configs/menuItems";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FC } from "react";
-import logo from "@/public/images/car-svgrepo-com.svg";
+import { FC, useEffect } from "react";
+import logo from "@/public/images/car.svg";
 
 const DesktopMenu: FC = () => {
   const router = useRouter();
@@ -21,7 +21,7 @@ const DesktopMenu: FC = () => {
           {menuItems.map((menuItem, i) => (
             <MenuItem
               key={i}
-              active={router.pathname.includes(menuItem.href)}
+              active={router.pathname === menuItem.href}
               href={menuItem.href}
               icon={menuItem.icon}
             >

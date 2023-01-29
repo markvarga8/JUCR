@@ -4,14 +4,14 @@ import {
   FaCalendar,
   FaInbox,
   FaChartBar,
+  FaGithub,
+  FaUsers,
 } from "react-icons/fa";
 
 const menuItems: Array<IMenuItem> = [
   { name: "Home", href: "/", icon: FaHome },
-  { name: "Projects", href: "/projects", icon: FaFolder },
-  { name: "Calendar", href: "/calendar", icon: FaCalendar },
-  { name: "Documents", href: "/documents", icon: FaInbox },
-  { name: "Reports", href: "/reports", icon: FaChartBar },
+  { name: "Repositories", href: "/repositories", icon: FaGithub },
+  { name: "Users", href: "/users", icon: FaUsers },
 ];
 
 export default menuItems;
