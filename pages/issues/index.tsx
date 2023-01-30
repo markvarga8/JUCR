@@ -96,7 +96,7 @@ const Page: NextPageWithLayout = () => {
             )}
             {issuesData && !issuesLoading && (
               <tbody className="divide-y divide-gray-200 bg-white">
-                {issuesData.search.edges.map((issue: any, i: number) => (
+                {issuesData.search.edges.map((issue: ISearchItem, i: number) => (
                   <tr key={i}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                       {issue.node.title ? issue.node.title : "Name not available"}

@@ -1,6 +1,6 @@
 import MainLayout from "@/components/layout";
 import { useMutation } from "@apollo/client";
-import { FormEvent, useEffect } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import Create_repository from "@/queries/Create_repository.gql";
 import { useRouter } from "next/router";
 import FormButton from "@/components/form/FormButton";
@@ -8,20 +8,25 @@ import Head from "next/head";
 
 const Page: NextPageWithLayout = () => {
   const router = useRouter();
-  const [createRepository, { data, loading }] = useMutation(Create_repository);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [createRepository, { error }] = useMutation(Create_repository);
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
-    createRepository({ variables: Object.fromEntries(formData as any) });
+    createRepository({ variables: Object.fromEntries(formData as FormData) })
+      .then((res) => {
+        setTimeout(() => {
+          if (res.data?.createRepository) {
+            router.push(`/repositories?repo=${res.data.createRepository.repository.nameWithOwner}`);
+          }
+          setLoading(false);
+        }, 1000);
+      })
+      .catch(() => setLoading(false));
   };
-
-  useEffect(() => {
-    if (data?.createRepository) {
-      router.push(`/repositories?repo=${data.createRepository.repository.nameWithOwner}`);
-    }
-  }, [data]);
 
   return (
     <>
@@ -35,6 +40,20 @@ const Page: NextPageWithLayout = () => {
             <div>
               <h3 className="text-lg font-medium leading-6 text-gray-900">Create repository</h3>
             </div>
+
+            {error && !loading && (
+              <div className="rounded-md bg-red-50 p-4">
+                <div className="flex">
+                  <div className="ml-3">
+                    <div className="mt-2 text-sm text-red-700">
+                      <ul role="list" className="list-disc space-y-1 pl-5">
+                        <li>{error.message}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div className="space-y-6 sm:space-y-5">
               <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">

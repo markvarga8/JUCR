@@ -44,7 +44,7 @@ const Page: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>{'Repositories'}</title>
+        <title>{"Repositories"}</title>
       </Head>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
@@ -93,7 +93,7 @@ const Page: NextPageWithLayout = () => {
                 <Image src={spinner} alt="spinner" className="animate-spin" width="50" height="50" />
               </div>
             )}
-            {!(repoData as ISearch)?.search?.edges.length && !repoLoading && (
+            {!repoData?.search?.edges.length && !repoLoading && (
               <div className="border-t border-gray-100 py-14 px-6 text-center text-sm sm:px-14">
                 <FaCertificate className="mx-auto h-6 w-6 text-gray-400" aria-hidden="true" />
                 <p className="mt-4 font-semibold text-gray-900">No results found</p>
@@ -102,7 +102,7 @@ const Page: NextPageWithLayout = () => {
             )}
             {repoData && !repoLoading && (
               <tbody className="divide-y divide-gray-200 bg-white">
-                {(repoData as ISearch).search.edges.map((repo: any, i: number) => (
+                {repoData.search.edges.map((repo: ISearchItem, i: number) => (
                   <tr key={i}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                       {repo.node.nameWithOwner}

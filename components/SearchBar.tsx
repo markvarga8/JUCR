@@ -108,7 +108,7 @@ const SearchBar: FC = () => {
                 {mergeList && !usersLoading && !repoLoading && (
                   <Combobox.Options static className="max-h-80 scroll-pt-11 scroll-pb-2 space-y-2 overflow-y-auto pb-2">
                     <li>
-                      {mergeList.map((item: any, i: number) => (
+                      {mergeList.map((item: ISearchItem, i: number) => (
                         <ul className="mt-2 text-gray-800">
                           <Link href={item.node.url ? item.node.url : "#"} target="_blank">
                             <Combobox.Option

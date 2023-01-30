@@ -96,7 +96,7 @@ const Page: NextPageWithLayout = () => {
             )}
             {usersData && !usersLoading && (
               <tbody className="divide-y divide-gray-200 bg-white">
-                {usersData.search.edges.map((user: any, i: number) => (
+                {usersData.search.edges.map((user: ISearchItem, i: number) => (
                   <tr key={i}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                       {user.node.name ? user.node.name : "Name not available"}

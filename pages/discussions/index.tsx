@@ -96,7 +96,7 @@ const Page: NextPageWithLayout = () => {
             )}
             {discussionsData && !discussionsLoading && (
               <tbody className="divide-y divide-gray-200 bg-white">
-                {discussionsData.search.edges.map((discussion: any, i: number) => (
+                {discussionsData.search.edges.map((discussion: ISearchItem, i: number) => (
                   <tr key={i}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                       {discussion.node.title ? discussion.node.title : "Name not available"}

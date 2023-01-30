@@ -21,7 +21,7 @@ const Page: NextPageWithLayout = () => {
                   actionIdx === 1 ? "sm:rounded-tr-lg" : "",
                   actionIdx === menuItems.length - 2 ? "sm:rounded-bl-lg" : "",
                   actionIdx === menuItems.length - 1 ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none" : "",
-                  "relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500",
+                  "relative group bg-white p-6",
                 )}
               >
                 <div>

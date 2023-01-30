@@ -13,17 +13,13 @@ declare global {
     icon: IconType;
   }
 
-  interface ISearch {
-    search: Object<{
-      edges: Array<{
-        node: Object<{
-          description: string;
-          id: string;
-          name: string;
-          nameWithOwner: string;
-          url: string;
-        }>;
-      }>;
+  interface ISearchItem {
+    node: Object<{
+      description: string;
+      id: string;
+      name: string;
+      nameWithOwner: string;
+      url: string;
     }>;
   }
 }
