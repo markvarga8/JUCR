@@ -5,12 +5,12 @@
     "node": true
   },
   "extends": [
-    "next/core-web-vitals",
-    "plugin:prettier/recommended"
+    "next",
+    "prettier"
   ],
-  "plugins": ["prettier", "unused-imports"],
+  "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
-    "unused-imports/no-unused-imports": "error"
+    "react/display-name": "off"
   }
 }

@@ -14,18 +14,12 @@ import Image from "next/image";
 const MobileMenu: FC = () => {
   const router = useRouter();
 
-  const sidebarOpen = useSelector(
-    (state: RootState) => state.layout.sidebarOpen
-  );
+  const sidebarOpen = useSelector((state: RootState) => state.layout.sidebarOpen);
   const dispatch = useDispatch();
 
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-40 md:hidden"
-        onClose={() => dispatch(setSidebarOpen(false))}
-      >
+      <Dialog as="div" className="relative z-40 md:hidden" onClose={() => dispatch(setSidebarOpen(false))}>
         <Transition.Child
           as={Fragment}
           enter="transition-opacity ease-linear duration-300"
@@ -69,10 +63,7 @@ const MobileMenu: FC = () => {
                   </button>
                 </div>
               </Transition.Child>
-              <Link
-                href="/"
-                className="flex flex-shrink-0 items-center px-4 gap-4"
-              >
+              <Link href="/" className="flex flex-shrink-0 items-center px-4 gap-4">
                 <Image src={logo} alt="logo" width="100" height="100" />
                 <span className="font-bold">{`${process.env.NEXT_PUBLIC_APP_NAME}`}</span>
               </Link>
@@ -81,7 +72,7 @@ const MobileMenu: FC = () => {
                   {menuItems.map((menuItem, i) => (
                     <MenuItem
                       key={i}
-                      active={router.pathname.includes(menuItem.href)}
+                      active={router.pathname === menuItem.href}
                       href={menuItem.href}
                       icon={menuItem.icon}
                       mobile

@@ -28,22 +28,19 @@ const Page: NextPageWithLayout = () => {
                 issue: event.target.value,
                 page: undefined,
               },
-              isEmpty
+              isEmpty,
             ),
           },
           undefined,
-          { shallow: true }
+          { shallow: true },
         );
       }, 300),
-    [router]
+    [router],
   );
 
-  const { loading: issuesLoading, data: issuesData } = useQuery(
-    Get_issues_query,
-    {
-      variables: { name: router.query.issue },
-    }
-  );
+  const { loading: issuesLoading, data: issuesData } = useQuery(Get_issues_query, {
+    variables: { name: router.query.issue },
+  });
 
   return (
     <>
@@ -54,9 +51,7 @@ const Page: NextPageWithLayout = () => {
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <div className="flex">
-              <h1 className="text-xl font-semibold text-gray-900 mr-3">
-                Issues
-              </h1>
+              <h1 className="text-xl font-semibold text-gray-900 mr-3">Issues</h1>
             </div>
 
             <div className="relative mt-3">
@@ -75,23 +70,14 @@ const Page: NextPageWithLayout = () => {
             {issuesData && !issuesLoading && (
               <thead className="bg-gray-50">
                 <tr>
-                  <th
-                    scope="col"
-                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                  >
+                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                     Name
                   </th>
                   <>
-                    <th
-                      scope="col"
-                      className="relative py-3.5 pl-3 pr-4 sm:pr-6"
-                    >
+                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                       <span className="sr-only">Open</span>
                     </th>
-                    <th
-                      scope="col"
-                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                    >
+                    <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                       Description
                     </th>
                   </>
@@ -100,27 +86,14 @@ const Page: NextPageWithLayout = () => {
             )}
             {issuesLoading && (
               <div className="w-full flex justify-center">
-                <Image
-                  src={spinner}
-                  alt="spinner"
-                  className="animate-spin"
-                  width="50"
-                  height="50"
-                />
+                <Image src={spinner} alt="spinner" className="animate-spin" width="50" height="50" />
               </div>
             )}
             {!issuesData?.search?.edges.length && !issuesLoading && (
               <div className="border-t border-gray-100 py-14 px-6 text-center text-sm sm:px-14">
-                <FaCertificate
-                  className="mx-auto h-6 w-6 text-gray-400"
-                  aria-hidden="true"
-                />
-                <p className="mt-4 font-semibold text-gray-900">
-                  No results found
-                </p>
-                <p className="mt-2 text-gray-500">
-                  We couldn’t find anything with that term. Please try again.
-                </p>
+                <FaCertificate className="mx-auto h-6 w-6 text-gray-400" aria-hidden="true" />
+                <p className="mt-4 font-semibold text-gray-900">No results found</p>
+                <p className="mt-2 text-gray-500">We couldn’t find anything with that term. Please try again.</p>
               </div>
             )}
             {issuesData && !issuesLoading && (
@@ -128,9 +101,7 @@ const Page: NextPageWithLayout = () => {
                 {issuesData.search.edges.map((issue: any, i: number) => (
                   <tr key={i}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                      {issue.node.title
-                        ? issue.node.title
-                        : "Name not available"}
+                      {issue.node.title ? issue.node.title : "Name not available"}
                     </td>
                     <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                       <Link
@@ -142,9 +113,7 @@ const Page: NextPageWithLayout = () => {
                       </Link>
                     </td>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 overflow-scroll">
-                      {issue.node.description
-                        ? issue.node.description
-                        : "Not available"}
+                      {issue.node.description ? issue.node.description : "Not available"}
                     </td>
                   </tr>
                 ))}

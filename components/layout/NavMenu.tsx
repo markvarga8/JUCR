@@ -20,10 +20,7 @@ const NavMenu: FC = () => {
       </button>
       <div className="px-6 h-full w-full">
         {/* Profile dropdown */}
-        <Menu
-          as="div"
-          className={"w-full h-full flex justify-center items-center"}
-        >
+        <Menu as="div" className={"w-full h-full flex justify-center items-center"}>
           <Menu.Button
             className="block w-6/12 rounded-full bg-white border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             onClick={() => dispatch(setSearchBarOpen(true))}

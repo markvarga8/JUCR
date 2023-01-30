@@ -23,15 +23,12 @@ const MenuItem: FC<Props> = (props) => {
       <Link
         href={props.href}
         onClick={() => dispatch(setSidebarOpen(false))}
-        className={cn(
-          "group flex items-center px-2 py-2 font-medium rounded-md",
-          {
-            "bg-gray-100 text-gray-900": props.active,
-            "text-gray-600 hover:bg-gray-50 hover:text-gray-900": !props.active,
-            "text-base": props.mobile,
-            "text-sm": !props.mobile,
-          }
-        )}
+        className={cn("group flex items-center px-2 py-2 font-medium rounded-md", {
+          "bg-gray-100 text-gray-900": props.active,
+          "text-gray-600 hover:bg-gray-50 hover:text-gray-900": !props.active,
+          "text-base": props.mobile,
+          "text-sm": !props.mobile,
+        })}
       >
         <props.icon
           className={cn("flex-shrink-0 h-6 w-6", {
@@ -54,7 +51,7 @@ const MenuItem: FC<Props> = (props) => {
         "group w-full p-6 rounded-md flex flex-col items-center text-xs font-medium text-white hover:shadow-menu hover:translate-y-1 transition-all duration-200",
         {
           "shadow-menu-lg": props.active,
-        }
+        },
       )}
       aria-current={props.active ? "page" : undefined}
     >

@@ -19,12 +19,7 @@ const DesktopMenu: FC = () => {
         </div>
         <div className="w-full h-full px-2 flex-1 items-center md-rounded">
           {menuItems.map((menuItem, i) => (
-            <MenuItem
-              key={i}
-              active={router.pathname === menuItem.href}
-              href={menuItem.href}
-              icon={menuItem.icon}
-            >
+            <MenuItem key={i} active={router.pathname === menuItem.href} href={menuItem.href} icon={menuItem.icon}>
               <span className="mt-2 text-[10px]">{menuItem.name}</span>
             </MenuItem>
           ))}

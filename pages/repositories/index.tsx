@@ -28,22 +28,19 @@ const Page: NextPageWithLayout = () => {
                 repo: event.target.value,
                 page: undefined,
               },
-              isEmpty
+              isEmpty,
             ),
           },
           undefined,
-          { shallow: true }
+          { shallow: true },
         );
       }, 300),
-    [router]
+    [router],
   );
 
-  const { loading: repoLoading, data: repoData } = useQuery(
-    Get_repositories_query,
-    {
-      variables: { name: router.query.repo },
-    }
-  );
+  const { loading: repoLoading, data: repoData } = useQuery(Get_repositories_query, {
+    variables: { name: router.query.repo },
+  });
 
   return (
     <>
@@ -54,9 +51,7 @@ const Page: NextPageWithLayout = () => {
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <div className="flex">
-              <h1 className="text-xl font-semibold text-gray-900 mr-3">
-                Repositories
-              </h1>
+              <h1 className="text-xl font-semibold text-gray-900 mr-3">Repositories</h1>
               <Link
                 href={"/repositories/create"}
                 className="px-3 py-2 text-sm leading-4 inline-flex items-center gap-2 rounded-md border border-transparent shadow-md text-white bg-jucr-primary transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jucr-primary"
@@ -81,23 +76,14 @@ const Page: NextPageWithLayout = () => {
             {repoData && !repoLoading && (
               <thead className="bg-gray-50">
                 <tr>
-                  <th
-                    scope="col"
-                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                  >
+                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                     Name
                   </th>
                   <>
-                    <th
-                      scope="col"
-                      className="relative py-3.5 pl-3 pr-4 sm:pr-6"
-                    >
+                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                       <span className="sr-only">Open</span>
                     </th>
-                    <th
-                      scope="col"
-                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                    >
+                    <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                       Description
                     </th>
                   </>
@@ -106,32 +92,19 @@ const Page: NextPageWithLayout = () => {
             )}
             {repoLoading && (
               <div className="w-full flex justify-center">
-                <Image
-                  src={spinner}
-                  alt="spinner"
-                  className="animate-spin"
-                  width="50"
-                  height="50"
-                />
+                <Image src={spinner} alt="spinner" className="animate-spin" width="50" height="50" />
               </div>
             )}
-            {!repoData?.search?.edges.length && !repoLoading && (
+            {!(repoData as ISearch)?.search?.edges.length && !repoLoading && (
               <div className="border-t border-gray-100 py-14 px-6 text-center text-sm sm:px-14">
-                <FaCertificate
-                  className="mx-auto h-6 w-6 text-gray-400"
-                  aria-hidden="true"
-                />
-                <p className="mt-4 font-semibold text-gray-900">
-                  No results found
-                </p>
-                <p className="mt-2 text-gray-500">
-                  We couldn’t find anything with that term. Please try again.
-                </p>
+                <FaCertificate className="mx-auto h-6 w-6 text-gray-400" aria-hidden="true" />
+                <p className="mt-4 font-semibold text-gray-900">No results found</p>
+                <p className="mt-2 text-gray-500">We couldn’t find anything with that term. Please try again.</p>
               </div>
             )}
             {repoData && !repoLoading && (
               <tbody className="divide-y divide-gray-200 bg-white">
-                {repoData.search.edges.map((repo: any, i: number) => (
+                {(repoData as ISearch).search.edges.map((repo: any, i: number) => (
                   <tr key={i}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                       {repo.node.nameWithOwner}
@@ -146,11 +119,7 @@ const Page: NextPageWithLayout = () => {
                       </Link>
                       {repo.node.nameWithOwner.includes("markvarga8") && (
                         <Link
-                          href={
-                            repo.node.name
-                              ? `/repositories/${repo.node.name}/update`
-                              : "#"
-                          }
+                          href={repo.node.name ? `/repositories/${repo.node.name}/update` : "#"}
                           className="px-3 py-2 text-sm leading-4 inline-flex items-center gap-2 rounded-md border border-transparent shadow-md text-white bg-jucr-primary transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jucr-primary"
                         >
                           Update
@@ -158,9 +127,7 @@ const Page: NextPageWithLayout = () => {
                       )}
                     </td>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 overflow-scroll">
-                      {repo.node.description
-                        ? repo.node.description
-                        : "Not available"}
+                      {repo.node.description ? repo.node.description : "Not available"}
                     </td>
                   </tr>
                 ))}

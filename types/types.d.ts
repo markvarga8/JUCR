@@ -12,6 +12,20 @@ declare global {
     href: string;
     icon: IconType;
   }
+
+  interface ISearch {
+    search: Object<{
+      edges: Array<{
+        node: Object<{
+          description: string;
+          id: string;
+          name: string;
+          nameWithOwner: string;
+          url: string;
+        }>;
+      }>;
+    }>;
+  }
 }
 
 export {};

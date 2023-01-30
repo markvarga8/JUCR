@@ -9,16 +9,11 @@ type AppPropsWithLayout = AppProps<{}> & {
   Component: NextPageWithLayout;
 };
 
-const MyApp = ({
-  Component,
-  pageProps: { ...pageProps },
-}: AppPropsWithLayout) => {
+const MyApp = ({ Component, pageProps: { ...pageProps } }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page: any) => page);
   return (
     <ApolloProvider client={client}>
-      <ReduxProvider store={store}>
-        {getLayout(<Component {...pageProps} />)}
-      </ReduxProvider>
+      <ReduxProvider store={store}>{getLayout(<Component {...pageProps} />)}</ReduxProvider>
     </ApolloProvider>
   );
 };
