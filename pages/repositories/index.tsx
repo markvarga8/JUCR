@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import Get_repositories_query from "@/queries/Get_repositories_query.gql";
 import { useRouter } from "next/router";
 import SearchInput from "@/components/form/SearchInput";
-import { useMemo, ChangeEvent } from "react";
+import { useMemo, ChangeEvent, useEffect } from "react";
 import debounce from "lodash/debounce";
 import omitBy from "lodash/omitBy";
 import isEmpty from "lodash/isEmpty";
@@ -40,6 +40,10 @@ const Page: NextPageWithLayout = () => {
   const { loading: repoLoading, data: repoData } = useQuery(Get_repositories_query, {
     variables: { name: router.query.repo },
   });
+
+  useEffect(() => {
+    router.query.repo = "markvarga8/";
+  }, []);
 
   return (
     <>
