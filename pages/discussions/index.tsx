@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import Get_discussions_query from "@/queries/Get_discussions_query.gql";
 import { useRouter } from "next/router";
 import SearchInput from "@/components/form/SearchInput";
-import { useMemo, ChangeEvent, useRef } from "react";
+import { useMemo, ChangeEvent } from "react";
 import debounce from "lodash/debounce";
 import omitBy from "lodash/omitBy";
 import isEmpty from "lodash/isEmpty";
@@ -15,7 +15,6 @@ import Head from "next/head";
 
 const Page: NextPageWithLayout = () => {
   const router = useRouter();
-  const searchInput = useRef<HTMLInputElement>(null);
 
   const debouncedEventHandler = useMemo(
     () =>
@@ -59,7 +58,6 @@ const Page: NextPageWithLayout = () => {
                 // @ts-ignore:next-line
                 onChange={debouncedEventHandler}
                 prefix="discussion"
-                ref={searchInput}
                 defaultValue={router.query.discussion ? router.query.discussion : ""}
               />
             </div>

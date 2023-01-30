@@ -1,5 +1,5 @@
 query GetDiscussions($name: String!) {
-  search(query: $name, type: DISCUSSION, first: 100) {
+  search(query: $name, type: DISCUSSION, first: 50) {
     edges {
       node {
         ... on Discussion {

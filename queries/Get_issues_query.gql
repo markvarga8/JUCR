@@ -1,5 +1,5 @@
 query GetIssues($name: String!) {
-  search(query: $name, type: ISSUE, first: 100) {
+  search(query: $name, type: ISSUE, first: 50) {
     edges {
       node {
         ... on Issue {

@@ -1,6 +1,6 @@
 import useDebounceEffect from "@/hooks/useDebounceEffect";
 import { useRouter } from "next/router";
-import { FC, useEffect, useId, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
 interface OwnProps {
@@ -10,22 +10,19 @@ interface OwnProps {
 type Props = OwnProps;
 
 const SearchInput: FC<Props> = (props) => {
-  const key = props.prefix ? props.prefix : "q";
-  const id = useId();
-
   const router = useRouter();
 
-  const [query, setQuery] = useState(router.query[key] || "");
+  const [query, setQuery] = useState(router.query[props.prefix ? props.prefix : "q"] || "");
 
   useEffect(() => {
-    setQuery(router.query[key] || "");
-  }, [router.query[key]]);
+    setQuery(router.query[props.prefix ? props.prefix : "q"] || "");
+  }, [router.query[props.prefix ? props.prefix : "q"]]);
 
   useDebounceEffect(() => {
     if (typeof query === "string" && /\w{2}/i.test(query)) {
-      router.push({ query: { ...router.query, [key]: query } });
+      router.push({ query: { ...router.query, [props.prefix ? props.prefix : "q"]: query } });
     } else {
-      const { [key]: _, ...rest } = router.query;
+      const { [props.prefix ? props.prefix : "q"]: _, ...rest } = router.query;
 
       router.push({ query: rest });
     }
@@ -39,9 +36,9 @@ const SearchInput: FC<Props> = (props) => {
       <input
         onChange={(e) => setQuery(e.target.value.toLowerCase())}
         value={query}
-        defaultValue={router.query[key] || ""}
+        defaultValue={router.query[props.prefix ? props.prefix : "q"]}
         type="search"
-        id={`${key}${id}-search`}
+        id={`${props.prefix ? props.prefix : "q"}$-search`}
         className="block w-full h-10 rounded-md border-gray-300 pl-10 sm:text-sm focus:outline-none"
         placeholder="Search..."
       />
