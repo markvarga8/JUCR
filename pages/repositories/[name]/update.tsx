@@ -39,7 +39,7 @@ const Page: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>{`Update repository - ${process.env.NEXT_PUBLIC_APP_NAME}`}</title>
+        <title>{`Update repository`}</title>
       </Head>
 
       <form onSubmit={handleSubmit} className="space-y-8 divide-y divide-gray-200">

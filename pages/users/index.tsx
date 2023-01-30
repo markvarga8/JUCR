@@ -45,7 +45,7 @@ const Page: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>{`Users - ${process.env.NEXT_PUBLIC_APP_NAME}`}</title>
+        <title>{`Users`}</title>
       </Head>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">

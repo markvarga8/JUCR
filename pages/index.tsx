@@ -8,7 +8,7 @@ const Page: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>{`Home - ${process.env.NEXT_PUBLIC_APP_NAME}`}</title>
+        <title>{`Home`}</title>
       </Head>
       <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
         {menuItems.map(

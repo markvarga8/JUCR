@@ -65,7 +65,6 @@ const MobileMenu: FC = () => {
               </Transition.Child>
               <Link href="/" className="flex flex-shrink-0 items-center px-4 gap-4">
                 <Image src={logo} alt="logo" width="100" height="100" />
-                <span className="font-bold">{`${process.env.NEXT_PUBLIC_APP_NAME}`}</span>
               </Link>
               <div className="mt-5 h-0 flex-1 overflow-y-auto">
                 <nav className="space-y-1 px-2">

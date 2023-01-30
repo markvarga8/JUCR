@@ -5,7 +5,7 @@ import { FC } from "react";
 const Custom404: FC = () => (
   <>
     <Head>
-      <title>{`404 - ${process.env.NEXT_PUBLIC_APP_NAME}`}</title>
+      <title>{`404`}</title>
     </Head>
     <div className=" min-h-screen bg-jucr-primary px-4 py-16 sm:px-6 sm:py-24 md:grid md:place-items-center lg:px-8">
       <div className="mx-auto max-w-max">
