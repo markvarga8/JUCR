@@ -42,7 +42,7 @@ const Page: NextPageWithLayout = () => {
   });
 
   useEffect(() => {
-    router.query.repo = "markvarga8/";
+    if (!router.query.repo) router.query.repo = "markvarga8/";
   }, []);
 
   return (
